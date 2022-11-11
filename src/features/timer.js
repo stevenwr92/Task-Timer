@@ -23,18 +23,19 @@ const PATTERN = [
   1 * ONE_SECOND_IN_MS,
   1 * ONE_SECOND_IN_MS,
   1 * ONE_SECOND_IN_MS,
-  1 * ONE_SECOND_IN_MS,
-  1 * ONE_SECOND_IN_MS,
-  1 * ONE_SECOND_IN_MS,
-  1 * ONE_SECOND_IN_MS,
-  1 * ONE_SECOND_IN_MS,
-  1 * ONE_SECOND_IN_MS,
 ];
 
 export const Timer = ({ focusSubject, clearSubject }) => {
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgess] = useState(1);
   const [minutes, setMinutes] = useState(0.1);
+
+  const onEnd = (reset) => {
+    Vibration.vibrate(PATTERN);
+    setIsStarted(false);
+    setProgess(1);
+    reset();
+  };
 
   return (
     <View style={styles.container}>
@@ -43,12 +44,10 @@ export const Timer = ({ focusSubject, clearSubject }) => {
           minutes={minutes}
           isPaused={!isStarted}
           onProgress={setProgess}
-          onEnd={() => {
-            Vibration.vibrate(PATTERN);
-          }}
+          onEnd={onEnd}
         />
         <View style={{ paddingTop: spacing.xxl }}>
-          <Text style={styles.title}>Focusing on:asdasd</Text>
+          <Text style={styles.title}>Focusing on:</Text>
           <Text style={styles.task}>{focusSubject}</Text>
         </View>
       </View>
