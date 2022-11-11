@@ -6,6 +6,7 @@ import { useState } from "react";
 import { spacing } from "../utils/sizes";
 import { colors } from "../utils/colors";
 import { Timing } from "./Timing";
+import { useKeepAwake } from "expo-keep-awake";
 
 const ONE_SECOND_IN_MS = 1000;
 
@@ -26,6 +27,7 @@ const PATTERN = [
 ];
 
 export const Timer = ({ focusSubject, clearSubject }) => {
+  useKeepAwake();
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgess] = useState(1);
   const [minutes, setMinutes] = useState(0.1);
