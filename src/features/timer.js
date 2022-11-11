@@ -5,6 +5,7 @@ import { RoundedButton } from "../components/RoundedButtons";
 import { useState } from "react";
 import { spacing } from "../utils/sizes";
 import { colors } from "../utils/colors";
+import { Timing } from "./Timing";
 
 const ONE_SECOND_IN_MS = 1000;
 
@@ -30,10 +31,10 @@ const PATTERN = [
   1 * ONE_SECOND_IN_MS,
 ];
 
-export const Timer = ({ focusSubject }) => {
+export const Timer = ({ focusSubject, clearSubject }) => {
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgess] = useState(1);
-  const [minutes, setMinutes] = useState(20);
+  const [minutes, setMinutes] = useState(0.1);
 
   return (
     <View style={styles.container}>
@@ -58,6 +59,9 @@ export const Timer = ({ focusSubject }) => {
           style={{ height: spacing.sm }}
         />
       </View>
+      <View style={styles.timmingWrapper}>
+        <Timing onChangeTime={setMinutes} />
+      </View>
       <View style={styles.buttonWrapper}>
         {!isStarted && (
           <RoundedButton
@@ -76,6 +80,9 @@ export const Timer = ({ focusSubject }) => {
           />
         )}
       </View>
+      <View style={styles.clearSubjectWrapper}>
+        <RoundedButton size={60} title="-" onPress={clearSubject} />
+      </View>
     </View>
   );
 };
@@ -88,6 +95,12 @@ const styles = StyleSheet.create({
     flex: 0.5,
     alignItems: "center",
     justifyContent: "center",
+  },
+  timmingWrapper: {
+    flex: 0.1,
+    paddingTop: spacing.xxl,
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   buttonWrapper: {
     flex: 0.3,
@@ -105,4 +118,5 @@ const styles = StyleSheet.create({
     color: colors.white,
     textAlign: "center",
   },
+  clearSubjectWrapper: { alignItems: "center" },
 });
